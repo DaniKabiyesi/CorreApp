@@ -16,3 +16,4 @@ rootProject.name = "CorreApp"
 include ':features'
 include ':features:home'
 include ':features:schedule'
+include ':features:notes'

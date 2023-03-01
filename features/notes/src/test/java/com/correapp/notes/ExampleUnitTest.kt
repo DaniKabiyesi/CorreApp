@@ -1,4 +1,4 @@
-package com.example.schedule
+package com.correapp.notes
 
 import org.junit.Test
 
