@@ -1,7 +1,7 @@
-package com.correapp.notes
+package com.correapp.notes.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notes.R
 
 class NotesActivity : AppCompatActivity() {
