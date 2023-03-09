@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 @Entity
 internal data class Folder(
     @PrimaryKey() val id: String,
-    @ColumnInfo() val name: String
+    @ColumnInfo() val name: String,
+    @ColumnInfo() val notes: List<Note>
 )

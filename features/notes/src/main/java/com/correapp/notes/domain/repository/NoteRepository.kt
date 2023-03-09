@@ -1,30 +1,29 @@
 package com.correapp.notes.domain.repository
 
+import android.content.Context
 import com.correapp.notes.data.NoteDataBase
 import com.correapp.notes.domain.model.Note
 
 internal interface NoteRepository {
-    fun loadNotes(): List<Note>
-    fun addNote(): Note
-    fun editNote(): Note
-    fun deleteNote()
+    suspend fun loadNotes(): List<Note>
+    suspend fun addNote(): Note
+    suspend fun editNote(note: Note): Note
+    suspend fun deleteNote()
 }
 
 internal class NoteRepositoryImpl(
+    private val context: Context,
     private val dataBase: NoteDataBase
 ) : NoteRepository {
 
-    override fun loadNotes(): List<Note> = TODO()
+    private val db = NoteDataBase.getDataBaseInstance(context)
 
-    override fun addNote(): Note {
-        TODO("Not yet implemented")
-    }
+    override suspend fun loadNotes(): List<Note> = db.noteDao().loadNotes()
 
-    override fun editNote(): Note {
-        TODO("Not yet implemented")
-    }
+    override suspend fun addNote() = db.noteDao().addNote()
 
-    override fun deleteNote() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun editNote(note: Note): Note = db.noteDao().editNote(note)
+
+    override suspend fun deleteNote() = db.noteDao().deleteNote()
+
 }

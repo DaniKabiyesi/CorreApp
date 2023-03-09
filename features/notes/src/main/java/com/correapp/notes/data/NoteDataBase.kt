@@ -10,26 +10,28 @@ import com.correapp.notes.domain.model.Folder
 import com.correapp.notes.domain.model.Note
 
 @Database(entities = [Note::class, Folder::class], version = 1)
-internal abstract class NoteDataBase: RoomDatabase() {
+internal abstract class NoteDataBase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
     abstract fun folderDao(): FolderDao
 
     companion object {
         @Volatile
-        private var db: NoteDataBase? = null
+        private var INSTANCE: NoteDataBase? = null
 
         fun getDataBaseInstance(context: Context): NoteDataBase {
-            if(db != null) return db!!
+            val tempInstance = INSTANCE
+            if (tempInstance != null) return tempInstance
 
             synchronized(this) {
-                db = Room
+                val instance = Room
                     .databaseBuilder(
                         context.applicationContext,
                         NoteDataBase::class.java,
                         "Database-note"
                     ).build()
-                return db!!
+                INSTANCE = instance
+                return instance
             }
         }
     }
