@@ -1,29 +1,29 @@
 package com.correapp.notes.domain.repository
 
-import android.content.Context
-import com.correapp.notes.data.NoteDataBase
+import com.correapp.notes.data.dao.FolderDao
 import com.correapp.notes.domain.model.Folder
+import javax.inject.Inject
 
-internal interface FolderRepository {
+interface FolderRepository {
     suspend fun loadFolders(): List<Folder>
     suspend fun addFolder(folderName: String): Folder
     suspend fun editFolder(folder: Folder): Folder
     suspend fun deleteFolder()
 }
 
-internal class FolderRepositoryImpl(private val context: Context) : FolderRepository {
-
-    private val db = NoteDataBase.getDataBaseInstance(context)
+class FolderRepositoryImpl @Inject constructor(
+    private val folderDao: FolderDao,
+) : FolderRepository {
 
     override suspend fun loadFolders(): List<Folder> =
-        db.folderDao().loadFolders()
+        folderDao.loadFolders()
 
     override suspend fun addFolder(folderName: String): Folder =
-        db.folderDao().addFolder(folderName)
+        folderDao.addFolder(folderName)
 
     override suspend fun editFolder(folder: Folder): Folder =
-        db.folderDao().editFolder(folder)
+        folderDao.editFolder(folder)
 
     override suspend fun deleteFolder() =
-        db.folderDao().deleteFolder()
+        folderDao.deleteFolder()
 }

@@ -1,29 +1,24 @@
 package com.correapp.notes.domain.repository
 
-import android.content.Context
-import com.correapp.notes.data.NoteDataBase
+import com.correapp.notes.data.dao.NoteDao
 import com.correapp.notes.domain.model.Note
+import javax.inject.Inject
 
-internal interface NoteRepository {
+interface NoteRepository {
     suspend fun loadNotes(): List<Note>
-    suspend fun addNote(): Note
+    suspend fun addNote(note: Note): Note
     suspend fun editNote(note: Note): Note
     suspend fun deleteNote()
 }
 
-internal class NoteRepositoryImpl(
-    private val context: Context,
-    private val dataBase: NoteDataBase
+class NoteRepositoryImpl @Inject constructor(
+    private val noteDao: NoteDao
 ) : NoteRepository {
+    override suspend fun loadNotes(): List<Note> = noteDao.loadNotes()
 
-    private val db = NoteDataBase.getDataBaseInstance(context)
+    override suspend fun addNote(note: Note): Note = noteDao.addNote()
 
-    override suspend fun loadNotes(): List<Note> = db.noteDao().loadNotes()
+    override suspend fun editNote(note: Note): Note = noteDao.editNote(note)
 
-    override suspend fun addNote() = db.noteDao().addNote()
-
-    override suspend fun editNote(note: Note): Note = db.noteDao().editNote(note)
-
-    override suspend fun deleteNote() = db.noteDao().deleteNote()
-
+    override suspend fun deleteNote() = noteDao.deleteNote()
 }

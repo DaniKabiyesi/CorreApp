@@ -1,12 +1,16 @@
-package com.correapp.notes.data.folder
+package com.correapp.notes.data.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.correapp.notes.domain.model.Folder
-import com.correapp.notes.domain.model.Note
 
 @Dao
-internal interface FolderDao {
-    @Query ("SELECT * FROM folder")
+interface FolderDao {
+    @Query("SELECT * FROM folder")
     fun loadFolders(): List<Folder>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
