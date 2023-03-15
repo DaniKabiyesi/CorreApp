@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 interface FolderRepository {
     suspend fun loadFolders(): List<Folder>
-    suspend fun addFolder(folderName: String): Folder
+    suspend fun addFolder(folder: Folder): Folder
     suspend fun editFolder(folder: Folder): Folder
-    suspend fun deleteFolder()
+    suspend fun deleteFolder(folder: Folder)
 }
 
 class FolderRepositoryImpl @Inject constructor(
@@ -18,12 +18,12 @@ class FolderRepositoryImpl @Inject constructor(
     override suspend fun loadFolders(): List<Folder> =
         folderDao.loadFolders()
 
-    override suspend fun addFolder(folderName: String): Folder =
-        folderDao.addFolder(folderName)
+    override suspend fun addFolder(folder: Folder): Folder =
+        folderDao.addFolder(folder)
 
     override suspend fun editFolder(folder: Folder): Folder =
         folderDao.editFolder(folder)
 
-    override suspend fun deleteFolder() =
-        folderDao.deleteFolder()
+    override suspend fun deleteFolder(folder: Folder) =
+        folderDao.deleteFolder(folder)
 }
